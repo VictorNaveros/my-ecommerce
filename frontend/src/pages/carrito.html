@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - GameForce</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-red-900 text-white">
+    <!-- Header - Compatible con tu main.js -->
+    <header class="bg-black border-b-4 border-red-600 sticky top-0 z-50 shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo - PERSONALIZA AQUÍ -->
+                <div class="text-2xl font-bold text-red-600 hover:text-red-400 transition transform hover:scale-105 ">
+                    <a href="index.html">GameForce</a>
+                </div>
+                
+                <!-- Navigation Desktop -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-300 hover:text-red-500 font-medium">Inicio</a>
+                    <a href="productos.html" class="text-gray-300 hover:text-red-500 font-medium">Productos</a>
+                    <a href="#categorias" class="text-gray-300 hover:text-red-500 font-medium">Categorías</a>
+                    <a href="contacto.html" class="text-gray-300 hover:text-red-500 font-medium">Contacto</a>
+                    <a href="carrito.html" class="text-red-500 font-semibold">Carrito</a>
+
+                </div>
+                    <!-- Carrito + menú móvil -->
+    <div class="flex items-center space-x-4">
+      <!-- Carrito -->
+      <a href="carrito.html" class="relative text-gray-300 hover:text-red-500">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5m0 0h3.1M17 
+            21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z" />
+        </svg>
+        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1" id="cart-counter">0</span>
+      </a>
+
+      <!-- Botón menú móvil -->
+      <button class="md:hidden text-gray-300 hover:text-red-500" id="mobile-menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="md:hidden hidden bg-gradient-to-r from-black to-red-900 border-t border-red-800" id="mobile-menu">
+    <div class="flex flex-col space-y-2 px-6 py-4">
+      <a href="index.html" class="text-gray-300 hover:text-red-500">Inicio</a>
+      <a href="productos.html" class="text-gray-300 hover:text-red-500">Productos</a>
+      <a href="#categorias" class="text-gray-300 hover:text-red-500">Categorías</a>
+      <a href="contacto.html" class="text-gray-300 hover:text-red-500">Contacto</a>
+    </div>
+  </div>
+                
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Page Title -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-white mb-2">Carrito de Compras</h1>
+            <nav class="text-sm text-white">
+                <a href="index.html" class="hover:text-red-500 transition-colors duration-200">Inicio</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-400 hover:text-red-500">Carrito</span>
+            </nav>
+        </div>
+
+        <!-- Cart Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Cart Items Section -->
+            <div class="lg:col-span-2">
+                <!-- Empty Cart Message -->
+                <div id="empty-cart" class="bg-gradient-to-tl from-black via-gray-900 to-red-950 min-h-scree rounded-xl shadow-lg p-8 text-center">
+                    <div class="max-w-md mx-auto">
+                        <div class="mb-6">
+                            <svg class="w-24 h-24 text-withe mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l-1 7H6l-1-7z"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-semibold text-white mb-4">Tu carrito está vacío</h2>
+                        <p class="text-gray-400 mb-6">No has agregado ningún producto a tu carrito de compras</p>
+                        <div class="space-y-3">
+                            <a href="productos.html" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 w-full inline-block text-center">
+                                Explorar Productos
+                            </a>
+                            <a href="index.html" class="bg-gray-800 hover:bg-gray-600 text-gray-200 font-semibold py-2 px-4 rounded-lg transition-all duration-200 w-full inline-block text-center">
+                                Volver al Inicio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Items Container -->
+                <div id="cart-items-container" class="space-y-4">
+                    <!-- Cart items will be dynamically inserted here -->
+                </div>
+
+                <!-- Continue Shopping Button -->
+                <div id="continue-shopping" class="hidden mt-6">
+                    <a href="productos.html" class="inline-flex items-center text-red-800 hover:text-red-600 transition-colors duration-200">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        </svg>
+                        Continuar Comprando
+                    </a>
+                </div>
+            </div>
+
+            <!-- Cart Summary Section -->
+            <div class="lg:col-span-1">
+                <div id="cart-summary" class="bg-gradient-to-bl from-black via-gray-900 to-red-950  rounded-xl shadow-lg p-6 sticky top-8">
+                    <h2 class="text-xl font-semibold text-white mb-6">Resumen del Pedido</h2>
+                    
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between text-gray-400">
+                            <span>Subtotal (<span id="summary-items-count">0</span> productos)</span>
+                            <span id="summary-subtotal">$0</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span>Envío</span>
+                            <span id="summary-shipping">$0</span>
+                        </div>
+                        <div class="flex justify-between text-gray-400">
+                            <span>Impuestos</span>
+                            <span id="summary-taxes">$0</span>
+                        </div>
+                        <hr class="border-gray-200">
+                        <div class="flex justify-between text-lg font-semibold text-gray-300">
+                            <span>Total</span>
+                            <span id="summary-total">$0</span>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-400 mb-2">Código de descuento</label>
+                        <div class="flex">
+                            <input id="promo-code" type="text" placeholder="Ingresa tu código" class="w-full px-4 py-3 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200">
+                            <button id="apply-promo" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-r-lg transition-all duration-200">
+                                Aplicar
+                            </button>
+                        </div>
+                        <p id="promo-message" class="text-sm mt-2 hidden"></p>
+                    </div>
+
+                    <button id="checkout-btn" onclick="goToCheckout()" class="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition-all">
+                      Proceder al Checkout
+                    </button>
+
+
+                    <div class="flex items-center justify-center text-red-600 text-sm">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                        Compra 100% segura
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+  <!-- Footer -->
+  <footer class="bg-gradient-to-t from-black via-gray-900 to-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">GameForce</h3>
+          <p class="text-gray-400 mb-4">Tu tienda de confianza en videojuegos.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Enlaces</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="index.html" class="hover:text-red-500 transition">Inicio</a></li>
+            <li><a href="productos.html" class="hover:text-red-500 transition">Productos</a></li>
+            <li><a href="carrito.html" class="hover:text-red-500 transition">Carrito</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Atención</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="contacto.html" class="hover:text-red-500 transition">Contacto</a></li>
+            <li><a href="#" class="hover:text-red-500 transition">Envíos</a></li>
+            <li><a href="#" class="hover:text-red-500 transition">Devoluciones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Legal</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-red-500 transition">Términos</a></li>
+            <li><a href="#" class="hover:text-red-500 transition">Privacidad</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-red-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 GameForce. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+    <!-- Scripts - Orden importante -->
+    <script src="../scripts/carrito2.js"></script>
+    <script src="../scripts/main.js"></script>
+
+</body>
+</html>

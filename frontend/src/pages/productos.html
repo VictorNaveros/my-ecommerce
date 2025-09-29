@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos - GameForce</title>
+    <meta name="description" content="Explora nuestro catálogo completo de laptops, celulares y componentes PC">
+    
+    <!-- TailwindCSS - Misma ruta que index.html -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+</head>
+<body class="bg-gradient-to-b from-black via-gray-900 to-red-900 text-white">
+    <!-- Header/Navegación -->
+    <header class="bg-black border-b-4 border-red-600 sticky top-0 z-50 shadow-lg">
+  <nav class="container mx-auto px-8 py-6 flex justify-between items-center">
+    
+    <!-- Logo -->
+    <div class="text-2xl font-bold text-red-600 hover:text-red-400 transition transform hover:scale-105 ">
+      <a href="index.html">GameForce</a>
+    </div>
+    
+    <!-- Menú desktop -->
+    <div class="hidden md:flex space-x-6">
+      <a href="index.html" class="text-gray-300 hover:text-red-500 font-medium">Inicio</a>
+      <a href="productos.html" class="text-gray-300 hover:text-red-500 font-medium">Productos</a>
+      <a href="#categorias" class="text-gray-300 hover:text-red-500 font-medium">Categorías</a>
+      <a href="contacto.html" class="text-gray-300 hover:text-red-500 font-medium">Contacto</a>
+    </div>
+
+    <!-- Carrito + menú móvil -->
+    <div class="flex items-center space-x-4">
+      <!-- Carrito -->
+      <a href="carrito.html" class="relative text-gray-300 hover:text-red-500">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5m0 0h3.1M17 
+            21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z" />
+        </svg>
+        <span class="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1" id="cart-counter">0</span>
+      </a>
+
+      <!-- Botón menú móvil -->
+      <button class="md:hidden text-gray-300 hover:text-red-500" id="mobile-menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Menú móvil -->
+  <div class="md:hidden hidden bg-gradient-to-r from-black to-red-900 border-t border-red-800" id="mobile-menu">
+    <div class="flex flex-col space-y-2 px-6 py-4">
+      <a href="index.html" class="text-gray-300 hover:text-red-500">Inicio</a>
+      <a href="productos.html" class="text-gray-300 hover:text-red-500">Productos</a>
+      <a href="#categorias" class="text-gray-300 hover:text-red-500">Categorías</a>
+      <a href="contacto.html" class="text-gray-300 hover:text-red-500">Contacto</a>
+    </div>
+  </div>
+</header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-7xl mx-auto px-4 py-8 bg-gradient-to-tr from-black via-gray-900 to-red-950 min-h-screen">
+        
+        <!-- Breadcrumbs y Título -->
+        <div class="mb-8">
+            <nav class="text-sm text-white mb-4">
+                <a href="index.html" class="hover:text-red-500 transition-colors duration-200">Inicio</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-400">Productos</span>
+            </nav>
+            <h1 class="text-3xl font-bold text-white">Catálogo de Productos</h1>
+            <p class="text-white mt-2">Encuentra la mejor tecnología al mejor precio</p>
+        </div>
+
+        <!-- BUSCADOR Y FILTROS -->
+        <div class="bg-gray-900 rounded-xl shadow-lg p-6 mb-8">
+            <!-- Barra de Búsqueda -->
+            <div class="mb-6">
+                <div class="relative">
+                    <input type="text" placeholder="Buscar productos..." class="w-full pl-12 pr-4 py-3  bg-gray-800 text-gray-200 placeholder-gray-400 border-2 border-gray-700 rounded-lg focus:outline-none focus:border-red-500 transition-colors duration-200"/>
+
+                    <svg class="absolute left-4 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Filtros -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Filtro Categoría -->
+                <div>
+                    <label class="block text-sm font-medium text-white mb-2">Categoría</label>
+                    <select class="w-full p-3 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200" id="category-filter">
+                        <option value="">Todas las categorías</option>
+                        <option value="shooters">Shooters</option>
+                        <option value="aventura">Aventura</option>
+                        <option value="acción">Acción</option>
+                        <option value="estrategia">Estrategia</option>
+                    </select>
+                </div>
+
+                <!-- Filtro Precio -->
+                <div>
+                    <label class="block text-sm font-medium text-white mb-2">Rango de Precio</label>
+                    <select class="w-full p-3 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200" id="price-filter">
+                        <option value="">Cualquier precio</option>
+                        <option value="0-500000">$0 - $500.000</option>
+                        <option value="500000-1500000">$500.000 - $1.500.000</option>
+                        <option value="1500000-3000000">$1.500.000 - $3.000.000</option>
+                        <option value="3000000+">$3.000.000+</option>
+                    </select>
+                </div>
+
+                <!-- Filtro Ordenamiento -->
+                <div>
+                    <label class="block text-sm font-medium text-white mb-2">Ordenar por</label>
+                    <select class="w-full p-3 bg-gray-800 text-gray-200 border border-gray-700 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200"  id="sort-filter">
+                        <option value="relevance">Relevancia</option>
+                        <option value="price-asc">Precio: Menor a Mayor</option>
+                        <option value="price-desc">Precio: Mayor a Menor</option>
+                        <option value="name">Nombre A-Z</option>
+                        <option value="newest">Más Nuevos</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID DE PRODUCTOS -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="products-grid">
+            
+            <!-- PRODUCTO 1-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="Counter-Strike-001" data-category="shooters" data-price="2499">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto1.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">Counter Strike</h3>
+                    <p class="text-sm text-gray-400 mb-4">Sumérgete en el fragor de la guerra antiterrorista más realista.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$2,499</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$2,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="Counter-Strike-001" data-category="shooters">
+                        Ver Detalles
+                      </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="Counter-Strike-001" data-product="Counter Strike" data-price="2499" data-image="../assets/images/Producto1.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 2-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="Minecraft-001" data-category="aventura" data-price="2499">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto2.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">Minecraft</h3>
+                    <p class="text-sm text-gray-400 mb-4">Minecraft es un videojuego de construcción de tipo «mundo abierto».</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$2,499</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$3,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="Minecraft-001" data-category="aventura">
+                        Ver Detalles
+                      </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="Minecraft-001" data-product="Minecraft" data-price="2499" data-image="../assets/images/Producto2.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 3-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="LOL-001" data-category="estrategia" data-price="3599">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto3.webp" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">League of Legends</h3>
+                    <p class="text-sm text-gray-400 mb-4">League of Legends es un juego en equipo con más de 140 campeones.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$3,599</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$5,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="LOL-001" data-category="estrategia">
+                        Ver Detalles
+                      </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="LOL-001" data-product="League of Legends" data-price="2499" data-image="../assets/images/Producto3.webp">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 4-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="God-of-War-001" data-category="acción" data-price="6599">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto4.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">God of War Ragnarok</h3>
+                    <p class="text-sm text-gray-400 mb-4">God of War Ragnarok es un videojuego de acción y aventura.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$6,599</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$9,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="God-of-War-001" data-category="acción">
+                        Ver Detalles
+                      </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="God-of-War-001" data-product="God of War Ragnarok" data-price="6599" data-image="../assets/images/Producto4.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 5-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="Hollow-Knight-silksong-001" data-category="aventura" data-price="9599">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto5.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">Hollow Knight: Silksong</h3>
+                    <p class="text-sm text-gray-400 mb-4">Hollow Knight: Silksong es un videojuego metroidvania desarrollado por el estudio independiente australiano Team Cherry.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$9,599</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$11,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="Hollow-Knight-silksong-001" data-category="aventura">
+                          Ver Detalles
+                        </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="Hollow-Knight-silksong-001" data-product="Hollow Knight Silksong" data-price="9599" data-image="../assets/images/Producto5.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 6-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="Hollow-Knight-001" data-category="aventura" data-price="7599">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto6.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">Hollow Knight</h3>
+                    <p class="text-sm text-gray-400 mb-4">Hollow Knight es un videojuego perteneciente al género metroidvania.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$7,599</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$9,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="Hollow-Knight-001" data-category="aventura">
+                          Ver Detalles
+                        </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="Hollow-Knight-001" data-product="Hollow Knight" data-price="7599" data-image="../assets/images/Producto6.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 7-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="Halo-001" data-category="shooters" data-price="6599">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto7.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">Halo: Combat Evolved</h3>
+                    <p class="text-sm text-gray-400 mb-4">Halo: Combat Evolved, es un videojuego de disparos en primera persona desarrollado por Bungie Studios.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$6,599</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$8,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="Halo-001" data-category="shooters">
+                          Ver Detalles
+                        </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="Halo-001" data-product="Halo: Combat Evolved" data-price="6599" data-image="../assets/images/Producto7.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCTO 8-->
+            <div class="bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card" data-id="The-Quarry-001" data-category="aventura" data-price="10599">
+                <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-48 flex items-center justify-center relative">
+                    <img src="../assets/images/Producto8.jpg" alt="League of Legends" class="h-full object-cover">
+                    <div class="absolute top-3 right-3 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                        -15%
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-2 text-white">The Quarry</h3>
+                    <p class="text-sm text-gray-400 mb-4">The Quarry es un videojuego de terror y drama interactivo desarrollado por Supermassive Games y publicado por 2K Games.</p>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-2xl font-bold text-red-500">$10,599</span>
+                            <span class="text-sm text-gray-500 line-through ml-2">$12,899</span>
+                        </div>
+                        <div class="flex text-yellow-400">
+                            ⭐⭐⭐⭐⭐
+                        </div>
+                    </div>
+                    <div class="flex space-x-2">
+                      <button class="ver-detalles-btn bg-gray-600 hover:bg-gray-700 text-gray-200 font-semibold px-3 py-2 rounded-lg transition duration-300 flex-1 text-sm text-center" data-id="The-Quarry-001" data-category="aventura">
+                          Ver Detalles
+                        </button>
+                      <button class="add-to-cart-btn bg-red-600 hover:bg-red-700 text-white font-semibold px-3 py-2 rounded-lg hover: transition duration-300 flex-1 text-sm" data-id="The-Quarry-001" data-product="The Quarry" data-price="10599" data-image="../assets/images/Producto8.jpg">
+                        Al Carrito
+                      </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGINACIÓN -->
+        <div id="pagination" class="mt-12 flex justify-center">
+            <nav class="flex space-x-2">
+                <button class="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-red-600 disabled:opacity-50" disabled>
+                    Anterior
+                </button>
+                <button class="px-4 py-2 bg-red-600 text-white rounded-lg">1</button>
+                <button class="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-red-600">2</button>
+                <button class="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-red-600">3</button>
+                <button class="px-4 py-2 border border-gray-600 rounded-lg text-white hover:bg-red-600">
+                    Siguiente
+                </button>
+            </nav>
+        </div>
+    </main>
+  <!-- Footer -->
+  <footer class="bg-gradient-to-t from-black via-gray-900 to-black text-white py-12">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">GameForce</h3>
+          <p class="text-gray-400 mb-4">Tu tienda de confianza en videojuegos.</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Enlaces</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="index.html" class="hover:text-red-500 transition">Inicio</a></li>
+            <li><a href="productos.html" class="hover:text-red-500 transition">Productos</a></li>
+            <li><a href="carrito.html" class="hover:text-red-500 transition">Carrito</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Atención</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="contacto.html" class="hover:text-red-500 transition">Contacto</a></li>
+            <li><a href="#" class="hover:text-red-500 transition">Envíos</a></li>
+            <li><a href="#" class="hover:text-red-500 transition">Devoluciones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Legal</h3>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-red-500 transition">Términos</a></li>
+            <li><a href="#" class="hover:text-red-500 transition">Privacidad</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-red-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 GameForce. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+    <!-- SCRIPTS - Orden importante -->
+    <script src="../scripts/productos-navegacion2.js"></script>
+    <script src="../scripts/product-url-handler2.js"></script>
+    <script src="../scripts/carrito2.js"></script>
+
+    <!-- Script específico para productos.html -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        // Botones "Comprar" - Usar misma lógica que index.html
+        document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const product = {
+                id: this.dataset.id,
+                name: this.dataset.product,
+                price: parseInt(this.dataset.price),
+                image: this.dataset.image || this.closest('.product-card').querySelector('img')?.src || '📦'
+            };
+                
+                // Efecto visual
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                }, 150);
+                
+                // Agregar al carrito
+                if (window.addToCart) {
+                    window.addToCart(product);
+                }
+            });
+        });
+        
+        // Botones "Ver Detalles"
+        document.querySelectorAll('.ver-detalles-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                const category = this.dataset.category;
+                window.location.href = `producto-detalle.html?id=${productId}&category=${category}`;
+            });
+        });
+    });
+    </script>
+</body>
+</html>
