@@ -26,6 +26,7 @@
 // Importar librerías necesarias
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 /**
  * ¿Qué es bcryptjs?
@@ -864,6 +865,59 @@ userSchema.methods.removeFromWishlist = function(productId) {
     return this.save();
 };
 
+/**
+ * Método para generar token JWT
+ * Se usa después de login o registro exitoso
+ */
+userSchema.methods.generateAuthToken = function() {
+    console.log(`🎫 Generando token JWT para usuario: ${this.email}`);
+    
+    // Payload del token (datos que contendrá)
+    const payload = {
+        id: this._id,
+        email: this.email,
+        role: this.role
+    };
+    
+    // Firmar el token con el SECRET del .env
+    const token = jwt.sign(
+        payload,
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRE || '30d' }
+    );
+    
+    console.log('✅ Token JWT generado exitosamente');
+    console.log(`📅 Expira en: ${process.env.JWT_EXPIRE || '30d'}`);
+    
+    return token;
+};
+
+/**
+ * Método para obtener perfil público del usuario
+ * Excluye contraseñas, tokens y datos sensibles
+ */
+userSchema.methods.getPublicProfile = function() {
+    return {
+        id: this._id,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        fullName: this.fullName,
+        email: this.email,
+        role: this.role,
+        phone: this.phone,
+        address: this.address,
+        avatar: this.avatar,
+        isActive: this.isActive,
+        isEmailVerified: this.isEmailVerified,
+        customerLevel: this.customerLevel,
+        totalOrders: this.totalOrders,
+        totalSpent: this.totalSpent,
+        formattedTotalSpent: this.formattedTotalSpent,
+        loyaltyPoints: this.loyaltyPoints,
+        createdAt: this.createdAt
+    };
+};
+
 // =============================================
 // MÉTODOS ESTÁTICOS - FUNCIONES DEL MODELO
 // =============================================
@@ -879,6 +933,17 @@ userSchema.statics.findByEmail = function(email) {
     return this.findOne({ 
         email: email.toLowerCase() 
     }).select('+password');  // Incluir contraseña explícitamente
+};
+
+/**
+ * Buscar usuario por email E INCLUIR contraseña
+ * Usado específicamente para login (necesitamos verificar password)
+ */
+userSchema.statics.findByCredentials = async function(email) {
+    console.log(`🔐 Buscando usuario para login: ${email}`);
+    return this.findOne({ 
+        email: email.toLowerCase() 
+    }).select('+password');  // +password incluye el campo que normalmente está oculto
 };
 
 /**
