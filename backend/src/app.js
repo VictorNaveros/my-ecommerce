@@ -7,11 +7,51 @@ const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/database');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
+const { generalLimiter } = require('./middleware/rateLimiter'); // ✨ NUEVO
+const mongoSanitize = require('express-mongo-sanitize');  // ✨ NUEVO
+const xss = require('xss-clean');  // ✨ NUEVO
+const helmet = require('helmet');  // ✨ NUEVO
+const logger = require('./config/logger');  // ✨ NUEVO
 
-console.log('🚀 Iniciando TechStore Pro Backend...');
+logger.info('🚀 Iniciando TechStore Pro Backend...');
+logger.info('🛡️  Helmet activado - Headers de seguridad configurados');
+
 
 // Crear aplicación Express
 const app = express();
+
+// =============================================
+// HELMET - HEADERS DE SEGURIDAD
+// =============================================
+// Aplicar Helmet PRIMERO (antes de otros middlewares)
+app.use(helmet({
+    // Content Security Policy - Protección XSS moderna
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'"],
+            scriptSrc: ["'self'"],
+            imgSrc: ["'self'", 'data:', 'https:'],
+            connectSrc: ["'self'"],
+            fontSrc: ["'self'"],
+            objectSrc: ["'none'"],
+            mediaSrc: ["'self'"],
+            frameSrc: ["'none'"]
+        }
+    },
+    // Forzar HTTPS en producción
+    hsts: {
+        maxAge: 31536000, // 1 año
+        includeSubDomains: true,
+        preload: true
+    }
+}));
+
+console.log('🛡️  Helmet activado - Headers de seguridad configurados');
+console.log('   ✅ Content Security Policy (CSP)');
+console.log('   ✅ X-Frame-Options: DENY');
+console.log('   ✅ X-Content-Type-Options: nosniff');
+console.log('   ✅ Strict-Transport-Security (HSTS)');
 
 // =============================================
 // MIDDLEWARE DE LOGGING PERSONALIZADO TECHSTORE
@@ -34,23 +74,71 @@ app.use((req, res, next) => {
     next();
 });
 
+// ✨ NUEVO: Morgan para HTTP logs
+const morganMiddleware = require('./config/morganConfig');
+app.use(morganMiddleware);
+logger.info('📊 Morgan HTTP logging activado');
+
 // =============================================
-// CONFIGURACIÓN CORS MEJORADA PARA TECHSTORE
+// RATE LIMITING - PROTECCIÓN CONTRA ABUSO
 // =============================================
-app.use(cors({
-    origin: [
+// Aplicar rate limiting a todas las rutas de la API
+app.use('/api/', generalLimiter);
+console.log('🛡️  Rate Limiting activado: 100 peticiones/15min por IP');
+
+// =============================================
+// CORS AVANZADO POR ENTORNO
+// =============================================
+
+const allowedOrigins = process.env.NODE_ENV === 'production'
+    ? [
+        'https://techstore-pro.vercel.app',
+        'https://www.techstore-pro.com',
+        process.env.FRONTEND_URL
+    ].filter(Boolean) // Eliminar undefined
+    : [
         'http://localhost:3000',      // React desarrollo
         'http://127.0.0.1:5500',      // Live Server
         'http://localhost:8080',      // Webpack
         'http://localhost:5173',      // Vite
-        'https://techstore-pro.vercel.app', // Producción (ejemplo)
-    ],
+        'http://localhost:4200'       // Angular
+    ];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // Permitir requests sin origin (Postman, apps móviles)
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = `CORS: Origen ${origin} no permitido`;
+            console.log(`⛔ ${msg}`);
+            return callback(new Error(msg), false);
+        }
+        
+        console.log(`✅ CORS: Origen permitido - ${origin}`);
+        return callback(null, true);
+    },
     credentials: true,
     optionsSuccessStatus: 200,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    exposedHeaders: ['X-Total-Count', 'X-Page-Count'] // Para paginación
+    allowedHeaders: [
+        'Content-Type', 
+        'Authorization',
+        'X-Requested-With',
+        'Accept'
+    ],
+    exposedHeaders: [
+        'X-Total-Count', 
+        'X-Page-Count',
+        'RateLimit-Limit',
+        'RateLimit-Remaining',
+        'RateLimit-Reset'
+    ],
+    maxAge: 86400 // Cache preflight por 24 horas
 }));
+
+console.log('✅ CORS configurado para:', process.env.NODE_ENV || 'development');
+console.log(`   📍 Orígenes permitidos: ${allowedOrigins.length}`);
 
 // =============================================
 // MIDDLEWARE DE PARSEO OPTIMIZADO
@@ -70,6 +158,29 @@ app.use(express.urlencoded({
     extended: true, 
     limit: '10mb' 
 }));
+
+// =============================================
+// SANITIZACIÓN DE DATOS - SEGURIDAD
+// =============================================
+
+// 1. Sanitizar contra inyecciones NoSQL
+app.use(mongoSanitize({
+    replaceWith: '_',  // Reemplazar caracteres prohibidos con '_'
+    onSanitize: ({ req, key }) => {
+        console.log(`🧹 Sanitización NoSQL: campo "${key}" limpiado`);
+    }
+}));
+console.log('🛡️  Sanitización NoSQL activada (express-mongo-sanitize)');
+
+// 2. Sanitizar contra ataques XSS
+app.use(xss());
+console.log('🛡️  Sanitización XSS activada (xss-clean)');
+
+// Sanitización personalizada (opcional)
+const { sanitizeInput, preventSQLInjection } = require('./middleware/sanitize');
+app.use(sanitizeInput);
+app.use(preventSQLInjection);
+console.log('🛡️  Sanitización personalizada activada');
 
 // =============================================
 // CONECTAR A MONGODB ATLAS
@@ -129,7 +240,8 @@ app.get('/', (req, res) => {
             'Filtros avanzados por categoría y precio',
             'Búsqueda inteligente de productos',
             'Manejo profesional de errores',
-            'Validaciones automáticas de datos'
+            'Validaciones automáticas de datos',
+            'Rate Limiting contra ataques de fuerza bruta' // ✨ NUEVO
         ]
     });
 });
@@ -167,7 +279,8 @@ app.get('/api/health', (req, res) => {
             errorHandler: 'Activo',
             validation: 'Activo',
             cors: 'Configurado',
-            logging: 'Personalizado'
+            logging: 'Personalizado',
+            rateLimiting: 'Activo' // ✨ NUEVO
         }
     });
 });

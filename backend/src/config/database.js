@@ -14,8 +14,6 @@ const connectDB = async () => {
         
         // Opciones de conexión optimizadas
         const options = {
-            useNewUrlParser: true,      // Usar parser de URL moderno
-            useUnifiedTopology: true,   // Usar motor de conexión moderno
             maxPoolSize: 10,            // Máximo 10 conexiones simultáneas
             serverSelectionTimeoutMS: 5000, // Timeout de 5 segundos
             socketTimeoutMS: 45000,     // Timeout de socket de 45 segundos

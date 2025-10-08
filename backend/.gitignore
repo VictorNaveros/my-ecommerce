@@ -67,3 +67,8 @@ Desktop.ini
 # Temporary files
 tmp/
 temp/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
