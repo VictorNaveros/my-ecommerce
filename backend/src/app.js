@@ -95,10 +95,15 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
         'https://techstore-pro.vercel.app',
         'https://www.techstore-pro.com',
         process.env.FRONTEND_URL
-    ].filter(Boolean) // Eliminar undefined
+    ].filter(Boolean)
     : [
         'http://localhost:3000',      // React desarrollo
-        'http://127.0.0.1:5500',      // Live Server
+        'http://127.0.0.1:5500',      // Live Server puerto 1
+        'http://127.0.0.1:5501',      // Live Server puerto 2 ✨ NUEVO
+        'http://127.0.0.1:5502',      // Live Server puerto 3 ✨ NUEVO
+        'http://localhost:5500',      // Live Server puerto 1 ✨ NUEVO
+        'http://localhost:5501',      // Live Server puerto 2 ✨ NUEVO
+        'http://localhost:5502',      // Live Server puerto 3 ✨ NUEVO
         'http://localhost:8080',      // Webpack
         'http://localhost:5173',      // Vite
         'http://localhost:4200'       // Angular

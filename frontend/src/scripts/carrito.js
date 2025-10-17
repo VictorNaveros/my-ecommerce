@@ -138,7 +138,7 @@ function saveCart() {
     }
 }
 
-// FUNCIÓN GLOBAL mejorada para agregar al carrito
+// FUNCIÓN GLOBAL mejorada para agregar al carrito (VERSIÓN CORREGIDA)
 window.addToCart = function(product) {
     if (isUpdating) return false;
     isUpdating = true;
@@ -146,17 +146,23 @@ window.addToCart = function(product) {
     console.log('➕ Agregando producto al carrito:', product);
     
     try {
-        const existing = cartItems.find(item => item.id === product.id);
+        // Normalizar ID: usar product.id primero, si no existe usar product._id
+        const productId = String(product.id || product._id || `tmp-${Date.now()}`);
+        // Aseguramos que product tenga siempre .id (útil para cuando viene de detalle o API)
+        product.id = productId;
+
+        // Buscar por id normalizado
+        const existing = cartItems.find(item => (item.id || item._id) === productId);
         
         if (existing) {
-            existing.quantity += 1;
+            existing.quantity = (existing.quantity || 0) + 1;
             showNotification(`${product.name} agregado (${existing.quantity})`, 'success');
         } else {
             const newItem = {
-                id: product.id,
+                id: productId,
                 name: product.name,
-                price: product.price,
-                image: product.image || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600',
+                price: product.price || 0,
+                image: product.image || product.mainImage || 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600',
                 quantity: 1,
                 addedAt: new Date().toISOString()
             };
@@ -192,7 +198,7 @@ function removeFromCart(productId) {
     if (isUpdating) return;
     isUpdating = true;
     
-    const index = cartItems.findIndex(item => item.id === productId);
+    const index = cartItems.findIndex(item => (item.id || item._id) === productId);
     if (index > -1) {
         const item = cartItems[index];
         
@@ -222,7 +228,7 @@ function removeFromCart(productId) {
 function updateQuantity(productId, newQuantity) {
     if (isUpdating) return;
     
-    const item = cartItems.find(item => item.id === productId);
+    const item = cartItems.find(item => (item.id || item._id) === productId);
     if (item) {
         if (newQuantity <= 0) {
             removeFromCart(productId);
@@ -327,8 +333,11 @@ function updateCartCounter() {
 // =============================================
 
 function createCartItemHTML(item) {
+    // Normalizar id localmente para asegurar consistencia
+    const id = String(item.id || item._id);
+
     return `
-        <div class="bg-gradient-to-tr from-black via-gray-900 to-red-950 rounded-xl shadow-lg p-6 cart-item product-hover" data-id="${item.id}">
+        <div class="bg-gradient-to-tr from-black via-gray-900 to-red-950 rounded-xl shadow-lg p-6 cart-item product-hover" data-id="${id}">
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                 <!-- Imagen del producto mejorada -->
                 <div class="w-24 h-24 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0 relative group">
@@ -349,7 +358,7 @@ function createCartItemHTML(item) {
                 <!-- Controles de cantidad mejorados -->
                 <div class="flex items-center gap-3">
                     <!-- BOTÓN MENOS -->
-                    <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" 
+                    <button onclick="updateQuantity('${id}', ${item.quantity - 1})" 
                             class="quantity-button w-10 h-10 rounded-full bg-gray-600 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all duration-200 transform hover:scale-110" 
                             title="Disminuir cantidad">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -363,7 +372,7 @@ function createCartItemHTML(item) {
                     </div>
                     
                     <!-- BOTÓN MÁS -->
-                    <button onclick="updateQuantity('${item.id}', ${item.quantity + 1})" 
+                    <button onclick="updateQuantity('${id}', ${item.quantity + 1})" 
                             class="quantity-button w-10 h-10 rounded-full bg-gray-600 hover:bg-red-500 hover:text-white flex items-center justify-center transition-all duration-200 transform hover:scale-110" 
                             title="Aumentar cantidad">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -372,7 +381,7 @@ function createCartItemHTML(item) {
                     </button>
                     
                     <!-- BOTÓN ELIMINAR mejorado -->
-                    <button onclick="removeFromCart('${item.id}')" 
+                    <button onclick="removeFromCart('${id}')" 
                             class="ml-4 p-3 text-red-600 hover:bg-red-500 hover:text-black rounded-xl transition-all duration-200 transform hover:scale-110 hover:rotate-3"
                             title="Eliminar producto">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -384,6 +393,7 @@ function createCartItemHTML(item) {
         </div>
     `;
 }
+
 
 function renderCartPage() {
     const emptyCart = document.getElementById('empty-cart');
@@ -917,5 +927,5 @@ window.goToCheckout = () => {
   saveCart();
 
   // Redirigir al checkout.html
-  window.location.href = "checkout2.html";
+  window.location.href = "checkout.html";
 };

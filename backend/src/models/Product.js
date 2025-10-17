@@ -19,7 +19,6 @@
  * Proyecto: TechStore Pro Backend
  */
 
-// Importar librerías necesarias
 const mongoose = require('mongoose');
 
 console.log('📱 Iniciando creación del modelo Product...');
@@ -29,11 +28,10 @@ console.log('📱 Iniciando creación del modelo Product...');
 // =============================================
 
 const productSchema = new mongoose.Schema({
-    
+
     // =============================================
     // INFORMACIÓN BÁSICA E IDENTIFICACIÓN
     // =============================================
-    
     name: {
         type: String,
         required: [true, 'El nombre del producto es obligatorio'],
@@ -42,7 +40,7 @@ const productSchema = new mongoose.Schema({
         maxlength: [200, 'El nombre no puede tener más de 200 caracteres'],
         index: true
     },
-    
+
     description: {
         type: String,
         required: [true, 'La descripción del producto es obligatoria'],
@@ -54,7 +52,6 @@ const productSchema = new mongoose.Schema({
     // =============================================
     // INFORMACIÓN COMERCIAL Y PRECIOS
     // =============================================
-    
     price: {
         type: Number,
         required: [true, 'El precio del producto es obligatorio'],
@@ -67,7 +64,7 @@ const productSchema = new mongoose.Schema({
             message: 'El precio debe ser un número entero (sin decimales)'
         }
     },
-    
+
     originalPrice: {
         type: Number,
         min: [0, 'El precio original no puede ser negativo'],
@@ -81,7 +78,7 @@ const productSchema = new mongoose.Schema({
             message: 'El precio original debe ser mayor o igual al precio actual'
         }
     },
-    
+
     discount: {
         type: Number,
         min: [0, 'El descuento no puede ser negativo'],
@@ -92,7 +89,6 @@ const productSchema = new mongoose.Schema({
     // =============================================
     // CATEGORIZACIÓN Y ORGANIZACIÓN
     // =============================================
-    
     category: {
         type: String,
         required: [true, 'La categoría del producto es obligatoria'],
@@ -100,28 +96,21 @@ const productSchema = new mongoose.Schema({
         lowercase: true,
         enum: {
             values: [
-                'computadoras',
-                'laptops', 
-                'smartphones',
-                'tablets',
-                'accesorios',
-                'audio',
-                'gaming',
-                'hogar-inteligente',
-                'wearables',
-                'otros'
+                'acción', 'aventura', 'rpg', 'estrategia', 'deportes', 'carreras',
+                'simulación', 'terror', 'plataformas', 'indie', 'shooters',
+                'puzzle', 'familiares', 'musicales', 'otros'
             ],
             message: '{VALUE} no es una categoría válida'
         },
         index: true
     },
-    
+
     subcategory: {
         type: String,
         trim: true,
         lowercase: true
     },
-    
+
     brand: {
         type: String,
         required: [true, 'La marca del producto es obligatoria'],
@@ -131,42 +120,117 @@ const productSchema = new mongoose.Schema({
     },
 
     // =============================================
-    // IMÁGENES Y MULTIMEDIA
-    // =============================================
-    
-    images: {
-        type: [String],
-        validate: {
-            validator: function(images) {
-                return images.length >= 1 && images.length <= 10;
-            },
-            message: 'Debe haber entre 1 y 10 imágenes'
+// IMÁGENES Y MULTIMEDIA - VALIDACIÓN MEJORADA
+// =============================================
+
+images: {
+    type: [String],
+    validate: {
+        validator: function(images) {
+            // Validar cantidad
+            if (images.length < 1 || images.length > 10) {
+                console.log(`❌ Cantidad de imágenes inválida: ${images.length}`);
+                return false;
+            }
+            
+            // Validar cada URL
+            return images.every(url => {
+                try {
+                    const urlObj = new URL(url);
+                    
+                    // Dominios confiables que NO requieren extensión
+                    const trustedDomains = [
+                        'images.unsplash.com',
+                        'unsplash.com',
+                        'cdn.shopify.com',
+                        'cloudinary.com',
+                        'imgur.com',
+                        'amazonaws.com',
+                        'googleusercontent.com'
+                    ];
+                    
+                    // Validar extensión de imagen
+                    const hasImageExtension = /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(url);
+                    
+                    // Validar dominio confiable
+                    const isTrustedDomain = trustedDomains.some(domain => 
+                        urlObj.hostname.includes(domain)
+                    );
+                    
+                    // ACEPTAR SI: es dominio confiable O tiene extensión
+                    return isTrustedDomain || hasImageExtension;
+                    
+                } catch {
+                    console.log(`❌ URL inválida en array: ${url}`);
+                    return false;
+                }
+            });
         },
-        required: [true, 'Al menos una imagen es obligatoria']
+        message: 'Todas las URLs de imágenes deben ser válidas (entre 1 y 10 imágenes)'
     },
-    
-    mainImage: {
-        type: String,
-        required: [true, 'La imagen principal es obligatoria'],
-        validate: {
-            validator: function(url) {
-                const urlRegex = /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif)$/i;
-                return urlRegex.test(url);
-            },
-            message: 'La imagen principal debe ser una URL válida de imagen'
-        }
-    },
+    required: [true, 'Al menos una imagen es obligatoria']
+},
+
+mainImage: {
+    type: String,
+    required: [true, 'La imagen principal es obligatoria'],
+    validate: {
+        validator: function(url) {
+            try {
+                const urlObj = new URL(url);
+                
+                // Dominios confiables que NO requieren extensión
+                const trustedDomains = [
+                    'images.unsplash.com',
+                    'unsplash.com',
+                    'cdn.shopify.com',
+                    'cloudinary.com',
+                    'imgur.com',
+                    'amazonaws.com',
+                    'googleusercontent.com'
+                ];
+                
+                // Validar extensión de imagen
+                const hasImageExtension = /^https?:\/\/.+\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(url);
+                
+                // Validar dominio confiable
+                const isTrustedDomain = trustedDomains.some(domain => 
+                    urlObj.hostname.includes(domain)
+                );
+                
+                // ACEPTAR SI: es dominio confiable O tiene extensión de imagen
+                const isValid = isTrustedDomain || hasImageExtension;
+                
+                if (isValid) {
+                    if (isTrustedDomain) {
+                        console.log(`✅ Imagen de dominio confiable: ${urlObj.hostname}`);
+                    } else {
+                        console.log(`✅ Imagen con extensión válida: ${url}`);
+                    }
+                    return true;
+                }
+                
+                console.log(`❌ URL rechazada (no es dominio confiable ni tiene extensión): ${url}`);
+                return false;
+                
+            } catch (error) {
+                console.log(`❌ URL inválida: ${url}`);
+                return false;
+            }
+        },
+        message: 'Debe ser una URL válida de imagen (dominio confiable o con extensión .jpg, .jpeg, .png, .webp, .gif)'
+    }
+},
 
     // =============================================
     // INVENTARIO Y DISPONIBILIDAD
     // =============================================
-    
     inStock: {
         type: Boolean,
         default: true,
         index: true
     },
-    
+
     quantity: {
         type: Number,
         required: [true, 'La cantidad en stock es obligatoria'],
@@ -180,7 +244,7 @@ const productSchema = new mongoose.Schema({
             message: 'La cantidad debe ser un número entero'
         }
     },
-    
+
     lowStockAlert: {
         type: Number,
         min: [0, 'La alerta de stock bajo no puede ser negativa'],
@@ -191,7 +255,6 @@ const productSchema = new mongoose.Schema({
     // =============================================
     // RATINGS Y REVIEWS
     // =============================================
-    
     rating: {
         average: {
             type: Number,
@@ -216,7 +279,6 @@ const productSchema = new mongoose.Schema({
     // =============================================
     // ETIQUETAS Y BÚSQUEDA
     // =============================================
-    
     tags: {
         type: [String],
         validate: {
@@ -229,33 +291,32 @@ const productSchema = new mongoose.Schema({
             return [...new Set(tags.map(tag => tag.toLowerCase().trim()))];
         }
     },
-    
+
     keywords: {
         type: [String]
     },
-    
+
     // =============================================
     // INFORMACIÓN COMERCIAL Y ESTADÍSTICAS
     // =============================================
-    
     salesCount: {
         type: Number,
         min: [0, 'El conteo de ventas no puede ser negativo'],
         default: 0
     },
-    
+
     viewCount: {
         type: Number,
         min: [0, 'El conteo de vistas no puede ser negativo'],
         default: 0
     },
-    
+
     featured: {
         type: Boolean,
         default: false,
         index: true
     },
-    
+
     status: {
         type: String,
         enum: {
@@ -265,15 +326,14 @@ const productSchema = new mongoose.Schema({
         default: 'active',
         index: true
     }
-    
+
 }, {
     // =============================================
     // OPCIONES DEL SCHEMA
     // =============================================
-    
     timestamps: true,
-    
-    toJSON: { 
+
+    toJSON: {
         virtuals: true,
         transform: function(doc, ret) {
             ret.id = ret._id;
@@ -282,8 +342,8 @@ const productSchema = new mongoose.Schema({
             return ret;
         }
     },
-    
-    toObject: { 
+
+    toObject: {
         virtuals: true
     }
 });
@@ -291,45 +351,28 @@ const productSchema = new mongoose.Schema({
 // =============================================
 // CAMPOS VIRTUALES - PROPIEDADES CALCULADAS
 // =============================================
-
-// Campo virtual: porcentaje de descuento
 productSchema.virtual('discountPercentage').get(function() {
     if (this.originalPrice && this.price) {
-        const discount = ((this.originalPrice - this.price) / this.originalPrice) * 100;
-        return Math.round(discount);
+        return Math.round(((this.originalPrice - this.price) / this.originalPrice) * 100);
     }
     return 0;
 });
 
-// Campo virtual: estado del stock
 productSchema.virtual('stockStatus').get(function() {
     if (this.quantity === 0) return 'out-of-stock';
     if (this.quantity <= this.lowStockAlert) return 'low-stock';
     return 'in-stock';
 });
 
-// Campo virtual: precio formateado
 productSchema.virtual('formattedPrice').get(function() {
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }).format(this.price);
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(this.price);
 });
 
-// Campo virtual: precio original formateado
 productSchema.virtual('formattedOriginalPrice').get(function() {
     if (!this.originalPrice) return null;
-    return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    }).format(this.originalPrice);
+    return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(this.originalPrice);
 });
 
-// Campo virtual: texto del estado en español
 productSchema.virtual('statusText').get(function() {
     const statusTexts = {
         'active': 'Activo',
@@ -343,82 +386,48 @@ productSchema.virtual('statusText').get(function() {
 // =============================================
 // MIDDLEWARE - FUNCIONES AUTOMÁTICAS
 // =============================================
-
-// MIDDLEWARE PRE-SAVE
 productSchema.pre('save', function(next) {
     console.log(`💾 Procesando producto antes de guardar: ${this.name}`);
-    
+
     // 1. SINCRONIZAR inStock CON quantity
     this.inStock = this.quantity > 0;
-    
-    if (this.quantity === 0) {
-        console.log(`📦 Producto sin stock: ${this.name}`);
-    } else {
-        console.log(`📦 Stock disponible: ${this.quantity} unidades`);
-    }
-    
+
     // 2. CALCULAR DESCUENTO AUTOMÁTICAMENTE
     if (this.originalPrice && this.price) {
-        const discountCalculated = Math.round(((this.originalPrice - this.price) / this.originalPrice) * 100);
-        this.discount = discountCalculated;
-        console.log(`🏷️ Descuento calculado automáticamente: ${discountCalculated}%`);
+        this.discount = Math.round(((this.originalPrice - this.price) / this.originalPrice) * 100);
     }
-    
+
     // 3. GENERAR KEYWORDS PARA BÚSQUEDA
     const keywords = [
         this.name.toLowerCase(),
         this.brand.toLowerCase(),
         this.category.toLowerCase()
     ];
-    
-    if (this.subcategory) {
-        keywords.push(this.subcategory.toLowerCase());
-    }
-    
+
+    if (this.subcategory) keywords.push(this.subcategory.toLowerCase());
+
     const nameWords = this.name.toLowerCase().split(' ');
     keywords.push(...nameWords);
-    
+
     this.keywords = [...new Set(keywords)].filter(word => word.length > 2);
-    
-    console.log(`🔍 Keywords generadas: ${this.keywords.join(', ')}`);
-    
+
     // 4. NORMALIZAR TAGS
     if (this.tags && this.tags.length > 0) {
         this.tags = [...new Set(this.tags.map(tag => tag.toLowerCase().trim()))];
-        console.log(`🏷️ Tags normalizadas: ${this.tags.join(', ')}`);
     }
-    
+
     next();
 });
 
-// MIDDLEWARE POST-SAVE
 productSchema.post('save', function(doc) {
-    console.log(`✅ Producto guardado exitosamente:`);
-    console.log(`   📱 Nombre: ${doc.name}`);
-    console.log(`   💰 Precio: ${doc.formattedPrice}`);
-    console.log(`   📦 Stock: ${doc.quantity} unidades (${doc.stockStatus})`);
-    console.log(`   🆔 ID: ${doc._id}`);
+    console.log(`✅ Producto guardado exitosamente: ${doc.name}`);
 });
 
 // =============================================
 // CREAR EL MODELO DESDE EL ESQUEMA
 // =============================================
-
 const Product = mongoose.model('Product', productSchema);
-
-console.log('✅ Modelo Product creado exitosamente');
-console.log('📋 Collection en MongoDB: products');
-console.log('🔧 Funcionalidades disponibles:');
-console.log('   • Crear productos: new Product(data)');
-console.log('   • Buscar productos: Product.find()');
-console.log('   • Actualizar productos: Product.findByIdAndUpdate()'); 
-console.log('   • Eliminar productos: Product.findByIdAndDelete()');
-
-// =============================================
-// EXPORTAR EL MODELO PARA USAR EN OTROS ARCHIVOS
-// =============================================
 
 module.exports = Product;
 
 console.log('📦 Modelo Product exportado y listo para usar');
-

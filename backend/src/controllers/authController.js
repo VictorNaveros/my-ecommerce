@@ -65,16 +65,16 @@ const register = async (req, res, next) => {
         console.log(`✅ Usuario creado: ${user.email} (${user.role})`);
         // ✨ NUEVO: Log de auditoría
         logger.audit('USER_REGISTERED', {
-            userId: newUser._id,
-            email: newUser.email,
-            role: newUser.role,
+            userId: User._id,
+            email: User.email,
+            role: User.role,
             ip: req.ip,
             userAgent: req.get('user-agent')
         });
 
         logger.info('Usuario creado', { 
-            email: newUser.email, 
-            role: newUser.role 
+            email: User.email, 
+            role: User.role 
         });
         
         // GENERAR TOKEN JWT
