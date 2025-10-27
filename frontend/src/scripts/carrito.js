@@ -691,12 +691,12 @@ function addTestProducts() {
             price: 1299000,
             image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=600'
         },
-        {
+        /*{
             id: 'test-laptop-gaming',
             name: 'MacBook Pro M3 16"',
             price: 2499000,
             image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600'
-        },
+        },*/
         {
             id: 'test-headphones-premium',
             name: 'Sony WH-1000XM5',

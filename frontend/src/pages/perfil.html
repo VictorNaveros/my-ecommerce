@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - TechStore Pro</title>
+    <meta name="description" content="Perfil de usuario en TechStore Pro">
+    
+    <!-- TailwindCSS -->
+    <link href="../styles/output.css" rel="stylesheet">
+    
+    <!-- Font Awesome para iconos profesionales -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<link rel="icon" href="data:,">
+<body class="bg-gray-50 font-sans min-h-screen">
+
+    <!-- HEADER - Lo actualizaremos después -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-lg mr-3">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                        <a href="index.html">TechStore Pro</a>
+                    </h1>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium">Inicio</a>
+                    <a href="productos.html" class="text-gray-700 hover:text-blue-600 font-medium">Productos</a>
+                    <a href="contacto.html" class="text-gray-700 hover:text-blue-600 font-medium">Contacto</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="carrito.html" class="relative">
+                        <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5M7 13l-1.1 5m0 0h1.1m0-5v5m0 0h10m-10 0a2 2 0 104 0m6 0a2 2 0 100 4"/>
+                        </svg>
+                        <span id="cart-counter" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" style="display: none;">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container mx-auto px-4 py-8">
+        
+        <!-- Título de la página -->
+        <div class="mb-8 animate-fade-in">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Mi Perfil</h1>
+            <p class="text-gray-600">Gestiona tu información personal</p>
+        </div>
+
+        <!-- Tarjeta de perfil -->
+        <div class="grid md:grid-cols-3 gap-6">
+            
+            <!-- Columna izquierda: Info del usuario -->
+            <div class="md:col-span-1 animate-fade-in">
+                <div class="profile-card rounded-xl shadow-xl p-6 text-white">
+                    <div class="flex flex-col items-center">
+                        <!-- Avatar -->
+                        <div class="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-4">
+                            <span id="user-avatar" class="text-4xl font-bold text-purple-600">?</span>
+                        </div>
+                        
+                        <!-- Nombre -->
+                        <h2 id="user-fullname" class="text-2xl font-bold mb-2">Cargando...</h2>
+                        
+                        <!-- Email -->
+                        <p id="user-email" class="text-purple-200 mb-4">email@example.com</p>
+                        
+                        <!-- Badge de rol -->
+                        <span id="user-role-badge" class="px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
+                            Cliente
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Estadísticas -->
+                <div class="mt-6 bg-white rounded-xl shadow-lg p-6 animate-fade-in">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Estadísticas</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Pedidos realizados</span>
+                            <span class="font-bold text-blue-600">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Total gastado</span>
+                            <span class="font-bold text-green-600">$0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Miembro desde</span>
+                            <span id="user-member-since" class="font-bold text-purple-600">2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Detalles del perfil -->
+            <div class="md:col-span-2 animate-fade-in">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Información Personal</h3>
+                    
+                    <form id="profile-form" class="space-y-6">
+                        <!-- Nombre -->
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Nombre</label>
+                                <input 
+                                    type="text" 
+                                    id="firstName" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                    readonly
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Apellido</label>
+                                <input 
+                                    type="text" 
+                                    id="lastName" 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                    readonly
+                                >
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Correo Electrónico</label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                                readonly
+                            >
+                            <p class="text-xs text-gray-500 mt-1">
+                                El correo electrónico no se puede cambiar
+                            </p>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Teléfono</label>
+                            <input 
+                                type="tel" 
+                                id="phone" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                                readonly
+                            >
+                        </div>
+
+                        <!-- Rol -->
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Rol</label>
+                            <input 
+                                type="text" 
+                                id="role" 
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50"
+                                readonly
+                            >
+                        </div>
+
+                        <!-- Estado de la cuenta -->
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Estado de la cuenta</label>
+                                <div id="account-status" class="flex items-center space-x-2">
+                                    <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                                        Activa
+                                    </span>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Email verificado</label>
+                                <div id="email-verified" class="flex items-center space-x-2">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">
+                                        No verificado
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Información adicional -->
+                        <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                                </svg>
+                                <div>
+                                    <p class="text-sm font-medium text-blue-800">Información</p>
+                                    <p class="text-sm text-blue-700 mt-1">
+                                        La edición de perfil estará disponible próximamente. 
+                                        Por ahora puedes visualizar tu información.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Sección de acciones -->
+                <div class="mt-6 grid md:grid-cols-2 gap-4">
+                    <button 
+                        onclick="window.location.href='index.html'"
+                        class="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+                    >
+                        Volver al Inicio
+                    </button>
+                    <button 
+                        id="logout-btn"
+                        class="w-full bg-red-500 hover:bg-red-600 text-white py-3 px-6 rounded-lg font-medium transition-colors"
+                    >
+                        Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center">
+                <p>&copy; 2025 TechStore Pro. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../scripts/auth-api.js"></script>
+    <script src="../scripts/session.js"></script>
+    <script src="../scripts/carrito.js"></script>
+
+    <script>
+        // =============================================
+        // CARGAR DATOS DEL PERFIL
+        // =============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 Página de perfil cargada');
+            
+            // Verificar autenticación
+            if (!authAPI.isAuthenticated()) {
+                console.log('❌ Usuario no autenticado');
+                authAPI.showNotification('Debes iniciar sesión', 'warning');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+                return;
+            }
+
+            // Obtener datos del usuario
+            const user = authAPI.getUser();
+            
+            if (!user) {
+                console.log('❌ No se pudieron obtener datos del usuario');
+                authAPI.showNotification('Error al cargar perfil', 'error');
+                return;
+            }
+
+            console.log('✅ Datos del usuario:', user);
+
+            // Llenar formulario
+            document.getElementById('firstName').value = user.firstName || '';
+            document.getElementById('lastName').value = user.lastName || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('phone').value = user.phone || '';
+            document.getElementById('role').value = user.role === 'admin' ? 'Administrador' : 'Cliente';
+
+            // Llenar tarjeta de perfil
+            document.getElementById('user-fullname').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('user-email').textContent = user.email;
+            
+            // Avatar con iniciales
+            const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+            document.getElementById('user-avatar').textContent = initials;
+
+            // Badge de rol
+            const roleBadge = document.getElementById('user-role-badge');
+            if (user.role === 'admin') {
+                roleBadge.textContent = '🔧 Administrador';
+                roleBadge.classList.add('bg-yellow-400', 'text-yellow-900');
+            } else {
+                roleBadge.textContent = '👤 Cliente';
+            }
+
+            // Email verificado
+            const emailVerified = document.getElementById('email-verified');
+            if (user.isEmailVerified) {
+                emailVerified.innerHTML = '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">✅ Verificado</span>';
+            }
+
+            // Estado de la cuenta
+            const accountStatus = document.getElementById('account-status');
+            if (user.isActive) {
+                accountStatus.innerHTML = '<span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">✅ Activa</span>';
+            } else {
+                accountStatus.innerHTML = '<span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">❌ Inactiva</span>';
+            }
+
+            // Miembro desde
+            const createdAt = new Date(user.createdAt);
+            const memberSince = createdAt.toLocaleDateString('es-ES', { 
+                year: 'numeric', 
+                month: 'long'
+            });
+            document.getElementById('user-member-since').textContent = memberSince;
+
+            // Botón de logout
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
+                    authAPI.logout();
+                    authAPI.showNotification('Sesión cerrada exitosamente', 'success');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
