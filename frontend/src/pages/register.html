@@ -86,74 +86,110 @@
 </head>
 <link rel="icon" href="data:,">
 <body class="bg-gray-50 font-sans min-h-screen flex flex-col">
+    <!-- Header/Navegación -->
+<header class="bg-black border-b-4 border-red-600 sticky top-0 z-50 shadow-lg font-[Orbitron]">
+  <nav class="container mx-auto px-6 py-5 flex justify-between items-center">
+    
+    <!-- LOGO -->
+    <div class="flex items-center space-x-3">
+      <div class="bg-gradient-to-r from-red-700 to-red-500 text-white px-3 py-2 rounded-lg shadow-md hover:shadow-red-500/40 transition transform hover:scale-105">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold text-red-600 hover:text-red-400 transition transform hover:scale-105">
+        <a href="index.html">GameForce</a>
+      </h1>
+    </div>
 
-    <!-- Header/Navegación - IDÉNTICO A INDEX.HTML Y LOGIN.HTML -->
-    <header class="bg-white shadow-lg sticky top-0 z-50">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <!-- Logo idéntico -->
-                <div class="flex items-center">
-                    <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-3 py-2 rounded-lg mr-3">
-                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
-                        </svg>
-                    </div>
-                    <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        <a href="index.html">TechStore Pro</a>
-                    </h1>
-                </div>
-                
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-6">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 relative group">
-                        Inicio
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
-                    </a>
-                    <a href="productos.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 relative group">
-                        Productos
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
-                    </a>
-                    <a href="index.html#categorias" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 relative group">
-                        Categorías
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
-                    </a>
-                    <a href="contacto.html" class="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200 relative group">
-                        Contacto
-                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
-                    </a>
-                </div>
+    <!-- MENÚ DESKTOP -->
+    <div class="hidden md:flex space-x-8">
+      <a href="index.html" class="text-gray-300 hover:text-red-500 transition relative group">
+        Inicio
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-200 group-hover:w-full"></span>
+      </a>
+      <a href="productos.html" class="text-gray-300 hover:text-red-500 transition relative group">
+        Productos
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-200 group-hover:w-full"></span>
+      </a>
+      <a href="index.html#categorias" class="text-gray-300 hover:text-red-500 transition relative group">
+        Categorías
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-200 group-hover:w-full"></span>
+      </a>
+      <a href="contacto.html" class="text-gray-300 hover:text-red-500 transition relative group">
+        Contacto
+        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-200 group-hover:w-full"></span>
+      </a>
+    </div>
 
-                <!-- Cart and Mobile Menu -->
-                <div class="flex items-center space-x-4">
-                    <!-- ICONO DE CARRITO -->
-                    <a href="carrito.html" class="relative group p-2.5 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 rounded-xl transition-all duration-300 transform hover:scale-105">
-                        <svg class="w-6 h-6 text-gray-700 group-hover:text-blue-600 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5M7 13l-1.1 5m0 0h1.1m0-5v5m0 0h10m-10 0a2 2 0 104 0m6 0a2 2 0 100 4"/>
-                        </svg>
-                        <!-- Contador -->
-                        <span id="cart-counter" class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 via-pink-500 to-red-600 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1 shadow-lg border-2 border-white" style="display: none;">0</span>
-                    </a>
-                    
-                    <!-- Mobile menu button -->
-                    <button class="md:hidden text-gray-700 hover:text-blue-600 transition-colors duration-200" id="mobile-menu-button">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+    <!-- ACCIONES DEL USUARIO -->
+    <div class="flex items-center space-x-4">
 
-            <!-- Mobile Menu -->
-            <div class="md:hidden mt-4 hidden" id="mobile-menu">
-                <div class="flex flex-col space-y-2 pb-4">
-                    <a href="index.html" class="text-gray-700 hover:text-blue-600 py-2 font-medium">Inicio</a>
-                    <a href="productos.html" class="text-gray-700 hover:text-blue-600 py-2">Productos</a>
-                    <a href="index.html#categorias" class="text-gray-700 hover:text-blue-600 py-2">Categorías</a>
-                    <a href="contacto.html" class="text-gray-700 hover:text-blue-600 py-2">Contacto</a>
-                </div>
-            </div>
-        </nav>
-    </header>
+      <!-- CARRITO -->
+      <a href="carrito.html" class="relative group">
+        <div class="relative p-3 rounded-xl bg-gradient-to-br from-red-900 to-black group-hover:from-red-800 group-hover:to-red-900 transition-all duration-300 transform group-hover:scale-110 group-hover:shadow-lg">
+          <i class="fas fa-shopping-cart text-xl text-red-500 group-hover:text-red-400 transition-colors"></i>
+          <span id="cart-counter" class="absolute -top-2 -right-2 bg-red-600 text-white text-sm font-bold rounded-full min-w-[24px] h-[24px] flex items-center justify-center px-2 border-2 border-black shadow-md" style="display: none;">0</span>
+        </div>
+      </a>
+
+      <!-- MENÚ DE USUARIO -->
+      <div id="user-menu-container" style="display: none; position: relative;">
+        <button id="user-menu-button" class="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-red-900/40 transition">
+          <div class="w-8 h-8 bg-gradient-to-r from-red-600 to-red-400 rounded-full flex items-center justify-center text-white font-bold text-sm">
+            <span id="user-initials">U</span>
+          </div>
+          <span id="user-name" class="text-gray-300 hidden md:block">Usuario</span>
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
+
+        <!-- DROPDOWN -->
+        <div id="user-dropdown" class="hidden border border-gray-800 bg-black rounded-lg shadow-xl absolute top-full right-0 mt-2 w-56 z-50">
+          <div class="px-4 py-3 border-b border-gray-700">
+            <p id="dropdown-user-name" class="text-sm font-semibold text-red-500">Nombre Usuario</p>
+            <p id="dropdown-user-email" class="text-xs text-gray-400">email@ejemplo.com</p>
+            <span id="dropdown-user-role" class="inline-block mt-2 px-2 py-1 bg-red-900 text-red-300 text-xs rounded-full">Cliente</span>
+          </div>
+
+          <a href="perfil.html" class="block px-4 py-3 text-gray-300 hover:bg-red-900/40">Mi Perfil</a>
+          <a href="mis-pedidos.html" class="block px-4 py-3 text-gray-300 hover:bg-red-900/40">Mis Pedidos</a>
+
+          <div class="border-t border-gray-800 my-2"></div>
+
+          <button id="logout-button" class="w-full text-left px-4 py-3 text-red-500 hover:bg-red-900/40 flex items-center space-x-2">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Cerrar Sesión</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- BOTONES LOGIN/REGISTER -->
+      <div id="auth-buttons" class="flex items-center space-x-3">
+        <a href="login.html" class="px-4 py-2 text-red-500 font-medium hover:bg-red-900/40 rounded-lg transition">Iniciar Sesión</a>
+        <a href="register.html" class="px-4 py-2 bg-gradient-to-r from-red-700 to-red-500 text-white font-medium rounded-lg hover:shadow-lg hover:scale-105 transition-all">Registrarse</a>
+      </div>
+
+      <!-- BOTÓN MENÚ MÓVIL -->
+      <button class="md:hidden text-gray-300 hover:text-red-500 transition" id="mobile-menu-button">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MENÚ MÓVIL -->
+  <div class="md:hidden hidden bg-gradient-to-r from-black to-red-900 border-t border-red-800" id="mobile-menu">
+    <div class="flex flex-col space-y-2 px-6 py-4">
+      <a href="index.html" class="text-gray-300 hover:text-red-500">Inicio</a>
+      <a href="productos.html" class="text-gray-300 hover:text-red-500">Productos</a>
+      <a href="index.html#categorias" class="text-gray-300 hover:text-red-500">Categorías</a>
+      <a href="contacto.html" class="text-gray-300 hover:text-red-500">Contacto</a>
+    </div>
+  </div>
+</header>
 
     <!-- =============================================
          CONTENIDO PRINCIPAL - FORMULARIO DE REGISTRO
@@ -1022,5 +1058,148 @@
         });
     </script>
 
+<script>
+// =============================================
+// HEADER DINÁMICO - INICIALIZACIÓN
+// =============================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎨 Inicializando header dinámico...');
+    
+    // Elementos del DOM
+    const userMenuContainer = document.getElementById('user-menu-container');
+    const authButtons = document.getElementById('auth-buttons');
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userDropdown = document.getElementById('user-dropdown');
+    const logoutButton = document.getElementById('logout-button');
+    const adminOptions = document.getElementById('admin-options');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    // =============================================
+    // FUNCIÓN: ACTUALIZAR HEADER SEGÚN AUTENTICACIÓN
+    // =============================================
+    
+    function updateHeader() {
+        console.log('🔄 Actualizando header...');
+        
+        // Verificar si el usuario está autenticado
+        const isAuthenticated = authAPI && authAPI.isAuthenticated();
+        
+        if (isAuthenticated) {
+            // Usuario logueado - Mostrar menú de usuario
+            const user = authAPI.getUser();
+            
+            if (user) {
+                console.log('✅ Usuario logueado:', user.email);
+                
+                // Ocultar botones de login/register
+                if (authButtons) authButtons.style.display = 'none';
+                
+                // Mostrar menú de usuario
+                if (userMenuContainer) userMenuContainer.style.display = 'block';
+                
+                // Actualizar información del usuario
+                const initials = `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();
+                const fullName = `${user.firstName} ${user.lastName}`;
+                
+                // Iniciales en el botón
+                const userInitials = document.getElementById('user-initials');
+                if (userInitials) userInitials.textContent = initials;
+                
+                // Nombre en el botón
+                const userName = document.getElementById('user-name');
+                if (userName) userName.textContent = user.firstName;
+                
+                // Info en el dropdown
+                const dropdownUserName = document.getElementById('dropdown-user-name');
+                if (dropdownUserName) dropdownUserName.textContent = fullName;
+                
+                const dropdownUserEmail = document.getElementById('dropdown-user-email');
+                if (dropdownUserEmail) dropdownUserEmail.textContent = user.email;
+                
+                const dropdownUserRole = document.getElementById('dropdown-user-role');
+                if (dropdownUserRole) {
+                    if (user.role === 'admin') {
+                        dropdownUserRole.textContent = '🔧 Administrador';
+                        dropdownUserRole.className = 'inline-block mt-2 px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full font-medium';
+                        
+                        // Mostrar opciones de admin
+                        if (adminOptions) adminOptions.style.display = 'block';
+                    } else {
+                        dropdownUserRole.textContent = '👤 Cliente';
+                        dropdownUserRole.className = 'inline-block mt-2 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-medium';
+                        
+                        // Ocultar opciones de admin
+                        if (adminOptions) adminOptions.style.display = 'none';
+                    }
+                }
+                
+                console.log('✅ Header actualizado para usuario logueado');
+            }
+        } else {
+            // Usuario NO logueado - Mostrar botones de login/register
+            console.log('ℹ️ Usuario no autenticado');
+            
+            if (userMenuContainer) userMenuContainer.style.display = 'none';
+            if (authButtons) authButtons.style.display = 'flex';
+            
+            console.log('✅ Header actualizado para usuario no logueado');
+        }
+    }
+
+    // =============================================
+    // TOGGLE DEL DROPDOWN
+    // =============================================
+    
+    if (userMenuButton && userDropdown) {
+        userMenuButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            userDropdown.classList.toggle('hidden');
+        });
+
+        // Cerrar dropdown al hacer click fuera
+        document.addEventListener('click', function(e) {
+            if (!userMenuContainer.contains(e.target)) {
+                userDropdown.classList.add('hidden');
+            }
+        });
+    }
+
+    // =============================================
+    // LOGOUT
+    // =============================================
+    
+    if (logoutButton) {
+    logoutButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('🚪 Cerrando sesión...');
+        authAPI.logout();
+        window.location.reload();
+    });
+    }
+
+    // =============================================
+    // MOBILE MENU TOGGLE
+    // =============================================
+    
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+        });
+    }
+
+    // =============================================
+    // INICIALIZAR HEADER
+    // =============================================
+    
+    // Pequeño delay para asegurar que authAPI esté listo
+    setTimeout(() => {
+        updateHeader();
+    }, 100);
+    
+    console.log('✅ Header dinámico inicializado');
+});
+</script>
 </body>
 </html>

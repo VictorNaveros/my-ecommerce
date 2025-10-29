@@ -300,13 +300,16 @@ app.use('/api/products', require('./routes/products'));
 // Rutas de autenticación
 app.use('/api/auth', require('./routes/auth'));
 
+app.use('/api/orders', require('./routes/orders'));
+
 console.log('✅ Rutas API configuradas:');
 console.log('   📱 /api/products - Gestión de productos');
 console.log('   🔐 /api/auth - Autenticación y usuarios');
+console.log('   🛒 /api/orders - Gestión de pedidos');
 console.log('   🥇 /api/health - Estado del servidor');
 // TODO: Futuras rutas
 // app.use('/api/users', require('./routes/users'));
-// app.use('/api/orders', require('./routes/orders'));
+
 // app.use('/api/auth', require('./routes/auth'));
 // =============================================
 // MIDDLEWARE DE MANEJO DE ERRORES (DEBE IR AL FINAL)
